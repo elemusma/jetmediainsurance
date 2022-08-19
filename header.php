@@ -94,13 +94,13 @@ echo '</header>';
 
 echo '<section class="hero position-relative">';
 $globalPlaceholderImg = get_field('global_placeholder_image','options');
-if(is_page()){
+if(is_page() && !is_front_page()){
 if(has_post_thumbnail()){
 the_post_thumbnail('full', array('class' => 'w-100 h-100 bg-img position-absolute'));
 } else {
 echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
 }
-} else {
+} elseif (!is_front_page()) {
 echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-100 h-100 bg-img position-absolute']);
 }
 
@@ -108,35 +108,38 @@ echo wp_get_attachment_image($globalPlaceholderImg['id'],'full','',['class'=>'w-
 if(is_front_page()) {
 
 if(have_rows('header')): while(have_rows('header')): the_row();
-    $gallery = get_field('gallery');
+    $gallery = get_sub_field('gallery');
     if( $gallery ): 
+echo '<div class="header-carousel owl-carousel owl-theme">';
+
     foreach( $gallery as $image ):
     echo '<div class="col-lg-3 col-md-4 col-6 col col-portfolio mt-3 mb-3 overflow-h">';
     echo '<div class="position-relative">';
     echo '<a href="' . wp_get_attachment_image_url($image['id'], 'full') . '" data-lightbox="image-set">';
-    echo wp_get_attachment_image($image['id'], 'full','',['class'=>'w-100 img-portfolio'] );
+    echo wp_get_attachment_image($image['id'], 'full','',['class'=>'w-100 h-100 img-portfolio'] );
     echo '</a>';
     echo '</div>';
     echo '</div>';
     endforeach; 
+echo '</div>';
     endif;
 
 endwhile; endif;
 
-echo '<div class="pt-5 pb-5 text-white text-center">';
-echo '<div class="position-relative">';
-echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';
-echo '<div class="position-relative">';
-echo '<div class="container">';
-echo '<div class="row">';
-echo '<div class="col-12">';
-echo '<h1 class="pt-3 pb-3 mb-0">' . get_the_title() . '</h1>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
+// echo '<div class="pt-5 pb-5 text-white text-center">';
+// echo '<div class="position-relative">';
+// echo '<div class="multiply overlay position-absolute w-100 h-100 bg-img"></div>';
+// echo '<div class="position-relative">';
+// echo '<div class="container">';
+// echo '<div class="row">';
+// echo '<div class="col-12">';
+// echo '<h1 class="pt-3 pb-3 mb-0">' . get_the_title() . '</h1>';
+// echo '</div>';
+// echo '</div>';
+// echo '</div>';
+// echo '</div>';
+// echo '</div>';
+// echo '</div>';
 }
 
 
